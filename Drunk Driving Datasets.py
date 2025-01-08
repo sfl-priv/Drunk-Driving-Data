@@ -6,14 +6,27 @@ years = [2018, 2019, 2020, 2021, 2022]
 first_time = True
 for year in years:
     #Create the container with the first year
-	accdident_file = f"/Users/sebastianfirrell/Desktop/Data Exports/Amanda Demanda - Deadliest Roads in Texas/NHTSA FARS Data/{year}/accident.csv"
+	accident_file = f"/Users/sebastianfirrell/Desktop/Impaired, Distracted, or Intoxicated Driving/{year}/All Accidents.csv"
 	if first_time == True:
-		accident_master_container = pd.read_csv(accdident_file, encoding='unicode_escape', usecols=['STATENAME', 'ST_CASE', 'CITYNAME'])
+		accident_master_container = pd.read_csv(accident_file, encoding='unicode_escape', usecols=['STATENAME', 'ST_CASE', 'CITYNAME'])
 		first_time = False
 	else:
      #Append all the others to it
-		single_year_accident = pd.read_csv(accdident_file, encoding='unicode_escape', usecols=['STATENAME', 'ST_CASE', 'CITYNAME'])
+		single_year_accident = pd.read_csv(accident_file, encoding='unicode_escape', usecols=['STATENAME', 'ST_CASE', 'CITYNAME'])
 		accident_master_container = pd.concat([accident_master_container, single_year_accident], ignore_index=True)
   
 print(accident_master_container)
 
+#Retrieve all accidents for five years with their case ID as well as state and city
+years = [2018, 2019, 2020, 2021, 2022]
+first_time = True
+for year in years:
+    #Create the container with the first year
+	distracted_file = f"/Users/sebastianfirrell/Desktop/Impaired, Distracted, or Intoxicated Driving/{year}/Distracted Driving Accidents.csv"
+	if first_time == True:
+		distracted_master_container = pd.read_csv(distracted_file, encoding='unicode_escape', usecols=['STATENAME', 'ST_CASE', 'CITYNAME'])
+		first_time = False
+	else:
+     #Append all the others to it
+		single_year_distracted = pd.read_csv(distracted_file, encoding='unicode_escape', usecols=['STATENAME', 'ST_CASE', 'CITYNAME'])
+		distracted_master_container = pd.concat([accident_master_container, single_year_accident], ignore_index=True)
