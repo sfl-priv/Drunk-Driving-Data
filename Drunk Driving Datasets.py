@@ -24,9 +24,9 @@ for year in years:
     #Create the container with the first year
 	distracted_file = f"/Users/sebastianfirrell/Desktop/Impaired, Distracted, or Intoxicated Driving/{year}/Distracted Driving Accidents.csv"
 	if first_time == True:
-		distracted_master_container = pd.read_csv(distracted_file, encoding='unicode_escape', usecols=['STATENAME', 'ST_CASE', 'CITYNAME'])
+		distracted_master_container = pd.read_csv(distracted_file, encoding='unicode_escape', usecols=['ST_CASE', 'CITYNAME', 'MDRDSTRDNAME'])
 		first_time = False
 	else:
      #Append all the others to it
-		single_year_distracted = pd.read_csv(distracted_file, encoding='unicode_escape', usecols=['STATENAME', 'ST_CASE', 'CITYNAME'])
+		single_year_distracted = pd.read_csv(distracted_file, encoding='unicode_escape', usecols=['ST_CASE', 'CITYNAME', 'MDRDSTRDNAME'])
 		distracted_master_container = pd.concat([accident_master_container, single_year_accident], ignore_index=True)
