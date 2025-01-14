@@ -1,5 +1,6 @@
 import pandas as pd
 import requests
+from functools import reduce
 
 #Retrieve all accidents for five years with their case ID as well as state and city
 years = [2018, 2019, 2020, 2021, 2022]
@@ -17,7 +18,7 @@ for year in years:
   
 print(accident_master_container)
 
-#Retrieve all accidents for five years with their case ID as well as state and city
+#For distracted driving, get all accidents for five years with their case ID as well as state and city
 years = [2018, 2019, 2020, 2021, 2022]
 first_time = True
 for year in years:
@@ -33,6 +34,7 @@ for year in years:
 
 print(distracted_master_container)
 
+#For impaired driving, get all accidents for five years with their case ID as well as state and city
 years = [2018, 2019, 2020, 2021, 2022]
 first_time = True
 for year in years:
@@ -48,6 +50,7 @@ for year in years:
 
 print(impaired_master_container)
 
+#For intoxicated driving, get all accidents for five years with their case ID as well as state and city
 years = [2018, 2019, 2020, 2021, 2022]
 first_time = True
 for year in years:
@@ -63,5 +66,32 @@ for year in years:
 
 print(intoxicated_master_container)
 
-#Perform database merge of all dataframes into a single dataframe
 
+
+"""First Attempt to merge, which did not work"""
+#Attempt to merge all spreadsheets, joining them at the crash ID column
+did_driving_merge = accident_master_container.merge(impaired_master_container, distracted_master_container, intoxicated_master_container, on='ST_CASE')
+#Remove all rural crashes that happened outside of cities
+did_driving_merge = did_driving_merge[did_driving_merge.CITYNAME != 'NOT APPLICABLE']
+#Remove all crashes where no violations occured
+did_driving_merge_driving_merge.dropna(subset=['MVIOLATNNAME'], inplace=True)
+
+
+
+
+
+"""Another attempt with different method, where output looks wrong"""
+#Compile list of all dtaframes we want to merge
+data_frames = [impaired_master_container, accident_master_container, distracted_master_container]
+did_driving_merge = reduce(lambda  left,right: pd.merge(left,right,on=['ST_CASE'],how='outer'), data_frames)
+
+print(did_driving_merge)
+
+# Attempt to Merge both the spreadsheets, joining them at the crash ID column
+did_driving_merge = accident_master_container.merge(impaired_master_container, distracted_master_container, intoxicated_master_container, on='ST_CASE')
+#Remove all rural crashes that happened outside of cities
+did_driving_merge = did_driving_merge[did_driving_merge.CITYNAME != 'NOT APPLICABLE']
+#Remove all crashes where no violations occured
+did_driving_merge.dropna(subset=['MVIOLATNNAME'], inplace=True)
+
+print(did_driving_merge)
