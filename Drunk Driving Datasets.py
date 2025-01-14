@@ -74,7 +74,7 @@ did_driving_merge = accident_master_container.merge(impaired_master_container, d
 #Remove all rural crashes that happened outside of cities
 did_driving_merge = did_driving_merge[did_driving_merge.CITYNAME != 'NOT APPLICABLE']
 #Remove all crashes where no violations occured
-did_driving_merge_driving_merge.dropna(subset=['MVIOLATNNAME'], inplace=True)
+did_driving_merge.dropna(subset=['MVIOLATNNAME'], inplace=True)
 
 
 
