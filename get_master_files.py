@@ -33,6 +33,10 @@ def concat_fars_ext(f): # Takes the file we want from FARS as sole argument
                 master_file_df = pd.concat([master_file_df, single_year_file_df], ignore_index=True)
                 master_file_df.to_csv(f"{filepath_out}/{filename_out}.csv", index=False)
                 return (f"{filepath_out}/{filename_out}.csv")
+            
+def merge_datasets(a, b):
+    pd.merge(a, b)
+
 
 
 if __name__ == "__main__":
