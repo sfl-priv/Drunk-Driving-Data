@@ -7,11 +7,13 @@ import get_master_files as gf
 # Filepath out: 
 # /Users/sebastianfirrell/Desktop/DPR Data Analysis/Data Exports/Amanda Demanda - Drunk Driving Capitals Data
 
-person_files = pd.read_csv(f"{gf.concat_fars_ext("person.csv")}")
+person_files = pd.read_csv("/Users/sebastianfirrell/Desktop/DPR Data Analysis/Data Exports/Amanda Demanda - Drunk Driving Capitals Data/Master Person File.csv")
 person_files
 
+print(gf.concat_fars_ext("person.csv"))
+
 accident_file = pd.read_csv("/Users/sebastianfirrell/Desktop/DPR Data Analysis/Data Exports/Amanda Demanda - Drunk Driving Capitals Data/Master Accidents.csv")
-person_file = pd.read_csv("/Users/sebastianfirrell/Desktop/DPR Data Analysis/Data Exports/Amanda Demanda - Drunk Driving Capitals Data/Persons Master Sheet.csv")
+person_file = pd.read_csv("/Users/sebastianfirrell/Desktop/DPR Data Analysis/Data Exports/Amanda Demanda - Drunk Driving Capitals Data/Master Person File.csv")
 commuter_cities = pd.read_csv("/Users/sebastianfirrell/Desktop/DPR Data Analysis/Data Downloads/Combined Datasets/Commuter Vehicles by city.csv")
 
 # Get drunk driving fatalities per city
@@ -19,6 +21,15 @@ commuter_cities = pd.read_csv("/Users/sebastianfirrell/Desktop/DPR Data Analysis
 # Get car most involved in drunk driving
 # Get time which DUIs are most likely to happen
 
-accident_file
 
-print(person_files)
+person_cols = person_file.keys()
+columns = []
+for column in person_cols:
+    columns.append(column)
+print(columns)
+
+
+person_selected_cols = person_file[['STATENAME', 'ST_CASE', 'DAY', 'HOUR', 'ALC_STATUSNAME', 'DRINKING', ]]
+print(person_selected_cols)
+
+print(person_file[['DEVTYPENAME']])
