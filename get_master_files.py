@@ -7,7 +7,7 @@ def main():
     accidents = concat_fars_ext(f"{target_file}.csv")
     print(accidents)
     
-    
+
 
 def concat_fars_ext(f): # Takes the file we want from FARS as sole argument
     need_the_data = True
@@ -32,6 +32,7 @@ def concat_fars_ext(f): # Takes the file we want from FARS as sole argument
                 single_year_file_df['Year'] = year
                 master_file_df = pd.concat([master_file_df, single_year_file_df], ignore_index=True)
                 master_file_df.to_csv(f"{filepath_out}/{filename_out}.csv", index=False)
+                return (f"{filepath_out}/{filename_out}.csv")
 
 
 if __name__ == "__main__":
