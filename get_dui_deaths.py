@@ -7,11 +7,6 @@ person_file = pd.read_csv("/Users/sebastianfirrell/Desktop/DPR Data Analysis/Dat
 accident_file = pd.read_csv("/Users/sebastianfirrell/Desktop/DPR Data Analysis/Data Exports/Amanda Demanda - Drunk Driving Capitals Data/Master Accidents.csv", low_memory=False)
 seed_list = pd.read_csv("/Users/sebastianfirrell/Desktop/DPR Data Analysis/Data Downloads/Combined Datasets/Commuter Vehicles by city_with_population.csv", low_memory=False)
 
-# Get drunk driving fatalities per city
-# Get drunk driving fatalities as percentage of total fatalities
-# Get car most involved in drunk driving
-# Get time which DUIs are most likely to happen
-
 
 '''
 Merge both sheets on ST_CASE
