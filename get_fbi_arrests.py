@@ -22,7 +22,3 @@ def main():
     
 # def get_fbi_info():
     
-# def main():
-    
-if __name__ == "__main__":
-    main()
