@@ -10,6 +10,11 @@ states_and_cities_csv = pd.read_csv("States and Cities.csv")
 cities_only = states_and_cities_csv['City']
 cities_only.tolist()
 
+states_only = states_and_cities_csv['State']
+states_only.tolist()
+unique_states = set(states_only)
+unique_states
+
 def main():
 
     '''
@@ -35,113 +40,15 @@ def main():
         'Occurence Count' : count_col,
         'Occurence Count 2' : count_col_2,
     }
-    
-    cities_test = [
-        'LOS ANGELES',
-        'NEW YORK CITY',
-        'HOUSTON',
-        'CHICAGO',
-        'PHOENIX',
-        'SAN ANTONIO',
-        'SAN DIEGO',
-        'DALLAS',
-        'FORT WORTH',
-        'SAN JOSE',
-        'PHILADELPHIA',
-        'AUSTIN',
-        'JACKSONVILLE',
-        'COLUMBUS',
-        'INDIANAPOLIS',
-        'CHARLOTTE',
-        'NASHVILLE',
-        'OKLAHOMA CITY',
-        'DENVER',
-        'EL PASO',
-        'MEMPHIS',
-        'ALBUQUERQUE',
-        'LAS VEGAS',
-        'TUCSON',
-        'KANSAS CITY',
-        'OMAHA',
-        'PORTLAND',
-        'SEATTLE',
-        'MILWAUKEE',
-        'COLORADO SPRINGS',
-        'RALEIGH',
-        'VIRGINIA BEACH',
-        'FRESNO',
-        'LONG BEACH',
-        'SACRAMENTO',
-        'MESA',
-        'DETROIT',
-        'BALTIMORE',
-        'WICHITA',
-        'ATLANTA',
-        'AURORA',
-        'ARLINGTON',
-        'MIAMI',
-        'SAN FRANCISCO',
-        'TULSA',
-        'BAKERSFIELD',
-        'MINNEAPOLIS',
-        'TAMPA',
-        'BOSTON',
-        'ANAHEIM',
-        'ORLANDO',
-        'CORPUS CHRISTI',
-        'SANTA ANA',
-        'LINCOLN',
-        'RIVERSIDE',
-        'OAKLAND',
-        'GREENSBORO',
-        'HENDERSON',
-        'ANCHORAGE',
-        'STOCKTON',
-        'LUBBOCK',
-        'DURHAM',
-        'NEW ORLEANS',
-        'CLEVELAND',
-        'CINCINNATI',
-        'HONOLULU',
-        'ST. LOUIS',
-        'PLANO',
-        'RENO',
-        'WASHINGTON, DC',
-        'FORT WAYNE',
-        'ST. PAUL',
-        'CHULA VISTA',
-        'CHANDLER',
-        'MADISON',
-        'IRVINE',
-        'CHESAPEAKE',
-        'GILBERT',
-        'GARLAND',
-        'TOLEDO',
-        'SIOUX FALLS',
-        'HUNTSVILLE',
-        'SAINT PETERSBURG',
-        'NORFOLK',
-        'IRVING',
-        'BOISE',
-        'LAREDO',
-        'DES MOINES',
-        'GLENDALE',
-        'RICHMOND',
-        'PORT SAINT LUCIE',
-        'AMARILLO',
-        'TACOMA',
-        'PITTSBURGH',
-        'HIALEAH',
-        'SCOTTSDALE',
-        'BUFFALO',
-        'TALLAHASSEE',
-        'SANTA CLARITA',
-        'MOERNO VALLEY'
-    ]
-    
+        
+    # Filter master file only to target states
+    state_filtered_file = file[
+    (file["STATENAME_x"].isin(unique_states))]
+    state_filtered_file
+        
     # Iterate over the list of cities we want the cars for
     for city in cities_only:
-        one_city_df = file[file.CITYNAME == f'{city}'] # Filter Dataframe to target city
+        one_city_df = state_filtered_file[state_filtered_file.CITYNAME == f'{city}'] # Filter Dataframe to target city
         cities_col.append(f'{city}') # Add city name as spreadsheet column
         most_common_cars = one_city_df['MAK_MODNAME'].value_counts() # Find out how often a car's name occurs in the make and model column
         most_common_car_1 = most_common_cars.index[0] # Get the one that occurs the most
@@ -149,7 +56,7 @@ def main():
         most_common_count_1 = most_common_cars.iloc[0] # Get how often the most common car occurs
         most_common_count_2 = most_common_cars.iloc[1] # Get how often the second most common car occurs
         
-        # Add all the extracted data to the keys in dictionary
+        # Add all the extracted data to the lists which will contain our dictionary values
         car_col.append(most_common_car_1)
         car_col_2.append(most_common_car_2)
         count_col.append(most_common_count_1)
@@ -160,8 +67,7 @@ def main():
     
     # Choose location for final csv file
     filepath_out = input("Where do you want to store the file? ")
-    final_target__df.to_csv("")
-
+    final_target__df.to_csv(f"{filepath_out}")
 
 
 if __name__ == "__main__":
