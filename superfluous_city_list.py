@@ -1,5 +1,5 @@
 
-cities_test = [
+cities = [
 'LOS ANGELES',
 'NEW YORK CITY',
 'HOUSTON',

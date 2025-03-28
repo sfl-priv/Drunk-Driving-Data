@@ -4,8 +4,8 @@ import sys
 
 def main():
     target_file = input("Name of file to concatenate: ")
-    accidents = concat_fars_ext(f"{target_file}.csv")
-    print(accidents)
+    file = concat_fars_ext(f"{target_file}.csv")
+    print(file)
     
 
 
@@ -23,7 +23,10 @@ def concat_fars_ext(f): # Takes the file we want from FARS as sole argument
         for year in years:
             file = f"./{year}/{filename_in}"
             if i:
-                master_file_df = pd.read_csv(file, encoding='unicode_escape')
+                try:
+                    master_file_df = pd.read_csv(file, encoding='unicode_escape')
+                except FileNotFoundError:
+                    print(f"File \"{filename_in}\" not found in folder \"{filepath_in}\" please try again.") # Catch faulty filename input
                 master_file_df['Year'] = year
                 i = False
             # For the subsequenet times around, just append the new years data to the dataframe
