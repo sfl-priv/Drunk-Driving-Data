@@ -13,7 +13,6 @@ cities_only.tolist()
 states_only = states_and_cities_csv['State']
 states_only.tolist()
 unique_states = set(states_only)
-unique_states
 
 def main():
 
@@ -42,9 +41,8 @@ def main():
     }
         
     # Filter master file only to target states
-    state_filtered_file = file[
-    (file["STATENAME_x"].isin(unique_states))]
-    state_filtered_file
+    state_filtered_file = file[(file["STATENAME_x"].isin(unique_states))]
+    
         
     # Iterate over the list of cities we want the cars for
     for city in cities_only:
@@ -66,8 +64,9 @@ def main():
     final_target__df = pd.DataFrame(data=final_target_dict)
     
     # Choose location for final csv file
-    filepath_out = input("Where do you want to store the file? ")
-    final_target__df.to_csv(f"{filepath_out}")
+    filepath_out = input("File Save Location: ")
+    filename_out = input("File Name: ")
+    final_target__df.to_csv(f"{filepath_out}/{filename_out}.csv")
 
 
 if __name__ == "__main__":
