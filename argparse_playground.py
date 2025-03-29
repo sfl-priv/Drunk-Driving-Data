@@ -15,6 +15,10 @@ filename = args.filename
 
 # Get master files and filter them to the columns we want
 accident_file = pd.read_csv(concat_fars_ext(args.filename))
+print("Created accident file")
 person_file = pd.read_csv(concat_fars_ext(args.filename))
+print("Created person file")
 
-print(accident_file)
+print(accident_file, person_file)
+
+pd.read_csv(concat_fars_ext('accident.csv'))
