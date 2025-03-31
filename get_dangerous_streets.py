@@ -6,6 +6,30 @@ import sys
 
 # Usual spot for FARS Data: /Users/sebastianfirrell/Desktop/DPR Data Analysis/Data Downloads/Amanda Demanda - Deadliest Roads in Texas/NHTSA FARS Data
 
+'''
+
+This script goes through FARS data downloads and gives us the counts of a given data point by a list of cities.
+The list of cities in this script is currently set to the 100 cities in the US with the most commuter vehicles used on a daily basis as per the US Census.
+
+'''
+
+'''
+
+From the command line the user can choose which files within the FARS download to analyse per the filename args, as well as the data point they want to get counts for as per the column arg.
+
+'''
+
+'''
+
+The script assumes the following:
+
+- That two FARS folders are needed to get the information we need, and that they should be merged on the ST_CASE column
+- That the only column for which we need the datapoints is the only one we need to access. State and city are there by default, as well as whether or not the driver was drinking.
+
+To add or remove columns, access the usecols argument in the reader objects in the get_files funciton.
+
+'''
+
 # Define CLI functionality
 parser = argparse.ArgumentParser(prog='Find the Deadliest Streets in American Cities', description='Data point to get counts for')
 parser.add_argument('-c','--column', metavar='column', type=str, help='Picks a column in the dataset to get counts for')
@@ -15,8 +39,6 @@ args = parser.parse_args()
 column = args.column
 filename_0 = args.filename_0
 filename_1 = args.filename_1
-
-type(filename_0)
 
 def main():
     
