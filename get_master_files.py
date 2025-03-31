@@ -4,7 +4,7 @@ import os
 def main():
     target_file = input("Name of file to concatenate: ")
     file = concat_fars_ext(f"{target_file}.csv")
-    print(f"Successfully created{file}")
+    print(f"Successfully created {file}")
     
     
 def concat_fars_ext(f): # Takes the file we want from FARS as sole argument
@@ -12,7 +12,10 @@ def concat_fars_ext(f): # Takes the file we want from FARS as sole argument
     years = [2018, 2019, 2020, 2021, 2022]
     filepath_in = input("Folder Location: ")
     os.chdir(f"{filepath_in}")
-    filename_in = f
+    if "csv" not in f:
+        filename_in = f"{f}.csv"
+    else:
+        filename_in = f
     filepath_out= input("Filepath out: ")
     filename_out = input("Output File Name: ")
     if need_the_data:
@@ -30,7 +33,7 @@ def concat_fars_ext(f): # Takes the file we want from FARS as sole argument
                 single_year_file_df['Year'] = year
                 master_file_df = pd.concat([master_file_df, single_year_file_df], ignore_index=True)
     master_file_df.to_csv(f"{filepath_out}/{filename_out}.csv", index=False)
-    return (f"{filepath_out}/{filename_out}.csv")
+    return master_file_df
             
 
 if __name__ == "__main__":
