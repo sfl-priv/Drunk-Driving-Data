@@ -2,6 +2,7 @@ import argparse
 import pandas as pd
 from superfluous_city_list import cities
 from get_master_files import concat_fars_ext
+import sys
 import os
 
 # /Users/sebastianfirrell/Desktop/DPR Data Analysis/Data Downloads/Amanda Demanda - Deadliest Roads in Texas/NHTSA FARS Data
@@ -9,6 +10,8 @@ import os
 # filtering (accident)
 # filtering (person)
 
+#def main():
+    
 # Define CLI functionality
 parser = argparse.ArgumentParser(prog='Find the Deadliest Streets in American Cities', description='Data point to get counts for')
 parser.add_argument('-c','--column', metavar='column', type=str, help='Picks a column in the dataset to get counts for')
@@ -18,6 +21,8 @@ args = parser.parse_args()
 column = args.column
 filename_0 = args.filename_0
 filename_1 = args.filename_1
+
+#def get_files():
 
 # Get master files, check if reading in worked 
 try:
@@ -36,25 +41,27 @@ try:
 except FileNotFoundError: # Catch user typing in wrong file or path
     print(f"Could not find {args.filename_1}, please check spelling and capitalisation is the same across all years in FARS folder.\n Please also check you are using the correct filepath")
 
+print("File reading successful.\nMerging Files.")
 
 # Merge both dataframes
 merged_file = pd.merge(first_file, second_file, on='ST_CASE')
+print("Merge successful")
 
-# Get all unique states in a set
-states_and_cities_csv = pd.read_csv("States and Cities.csv")
-states_only = states_and_cities_csv['State']
-states_only.tolist()
-unique_states = set(states_only)
-
-# Filter for only drunk driving accidents which occur in cities
-filtered_merged_file = merged_file.loc[(merged_file['CITYNAME'] != 'NOT APPLICABLE') & (merged_file['CITYNAME'] != 'Other') & (merged_file['DRINKING'] == 1)]
-state_filtered_file = filtered_merged_file[(filtered_merged_file['STATENAME'].isin(unique_states))] # Make sure no cities in other states are included
+#def filter_data():
 
 # Get all unique states in a set
 states_and_cities_csv = pd.read_csv("/Users/sebastianfirrell/Desktop/DPR Data Analysis/Data Code/Amanda Demanda - Drunk Driving Hotspots Code/States and Cities.csv")
 states_only = states_and_cities_csv['State']
 states_only.tolist()
 unique_states = set(states_only)
+
+# Filter for only drunk driving accidents which occur in cities
+print("Filtering merged file")
+filtered_merged_file = merged_file.loc[(merged_file['CITYNAME'] != 'NOT APPLICABLE') & (merged_file['CITYNAME'] != 'Other') & (merged_file['DRINKING'] == 1)]
+state_filtered_file = filtered_merged_file[(filtered_merged_file['STATENAME'].isin(unique_states))] # Make sure no cities in other states are included
+print("Successfully merged files")
+
+# def prep_spreadsheet():
 
 # Declare final spreadsheet columns as empty lists
 city_col = []
@@ -68,28 +75,46 @@ final_target_dict = {
     'Occurence Count' : count_col,
 }
 
-print(final_target_dict)
+# def create_spreadsheet():
 
-
-'''# Iterate over list of cities
+# Iterate over list of cities
+print("Fetching data for all cities")
 for city in cities:
-    one_city_df = state_filtered_file[state_filtered_file.CITYNAME == f'{city}'] # Filter Dataframe to target city
-    city_col.append(f'{city}') # Add city name as spreadsheet column
-    value_counts_series = one_city_df[args.column].value_counts() # Show value counts of target value
-    highest_count = value_counts_series.index[0] # Get highest count
-    count = value_counts_series.iloc[0] # Get count amount
-    
-    # Add all the extracted data to the lists which will contain our dictionary values
-    value_col.append(highest_count)
-    count_col.append(count)
+    try:
+        one_city_df = state_filtered_file[state_filtered_file.CITYNAME == f'{city}'] # Filter Dataframe to target city
+        city_col.append(f'{city}') # Add city name as spreadsheet row
+        value_counts_series = one_city_df[args.column].value_counts() # Show value counts of target value
+        highest_count = value_counts_series.index[0] # Get highest count
+        count = value_counts_series.iloc[0] # Get count amount
+        
+        # Add all the extracted data to the lists which will contain our dictionary values
+        value_col.append(highest_count)
+        count_col.append(count)
+        print(f"Successfully added {city} data")
+    except IndexError: # Catch city lists not matching
+        print(f"Data for {city} not found.\nCheck your list of cities and make sure it matches accident data.\nBe mindful of case sensitivity. ")
+        value_col.append("N/A")
+        count_col.append("N/A")
+        continue # If no match, fill row values and move on to next city
+
+# Change column name to a more user-friendly name
+new_col_name = input(f"User-firendly column name for {args.column}: ")
+final_target_dict[new_col_name] = final_target_dict.pop(args.column)
 
 # Cast dictionary into a Dataframe
-
-final_target_df = pd.DataFrame(data=final_target_dict)
+if len(final_target_dict['City']) == len(final_target_dict[new_col_name]):
+    final_target_df = pd.DataFrame(data=final_target_dict)
+else:
+    sys.exit("Dictionary row lengths do not match, Pandas could not support Dataframe creation.\n") # Catch empty cell values
 
 # Alphabetically sort cities column
+final_target_df.sort_values('City')
 
 # Create final csv file
+folder_out = input("Where will the final file go? ")
+filename_out = input("Name your file: ")
+final_target_df.to_csv(f'{folder_out}/{filename_out}.csv')
 
-print(final_target_dict)
-'''
+
+'''if __name__ == "__main__":
+    main()'''

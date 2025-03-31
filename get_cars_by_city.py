@@ -59,6 +59,7 @@ def main():
         car_col_2.append(most_common_car_2)
         count_col.append(most_common_count_1)
         count_col_2.append(most_common_count_2)
+        print(f"Successfully added {city} data")
     
     # Convert dictionary to Dataframe object
     final_target_df = pd.DataFrame(data=final_target_dict)
