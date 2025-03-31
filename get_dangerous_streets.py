@@ -11,15 +11,9 @@ import sys
 This script goes through FARS data downloads and gives us the counts of a given data point by a list of cities.
 The list of cities in this script is currently set to the 100 cities in the US with the most commuter vehicles used on a daily basis as per the US Census.
 
-'''
-
-'''
 
 From the command line the user can choose which files within the FARS download to analyse per the filename args, as well as the data point they want to get counts for as per the column arg.
 
-'''
-
-'''
 
 The script assumes the following:
 
@@ -124,7 +118,7 @@ def create_spreadsheet(file):
             print(f"Data for {city} not found.\nCheck your list of cities and make sure it matches accident data.\nBe mindful of case sensitivity. ")
             value_col.append("N/A")
             count_col.append("N/A")
-            continue # If no match, fill row values and move on to next city
+            continue # If no match, fill row with values and move on to next city
         
     return final_target_dict
 
