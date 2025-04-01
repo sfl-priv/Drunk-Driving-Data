@@ -25,7 +25,7 @@ To add or remove columns, access the usecols argument in the reader objects in t
 '''
 
 # Define CLI functionality
-parser = argparse.ArgumentParser(prog='Find the Deadliest Streets in American Cities', description='Data point to get counts for')
+parser = argparse.ArgumentParser(prog='Find the Deadliest Drunk Driving Streets in American Cities', description='Data point to get counts for')
 parser.add_argument('-c','--column', metavar='column', type=str, help='Picks a column in the dataset to get counts for')
 parser.add_argument('-f0', '--filename_0', metavar='first file name', type=str, help='Picks which file from the FARS datasets to select')
 parser.add_argument('-f1', '--filename_1', metavar='second file name', type=str, help='Picks second file which file from the FARS datasets to select if a merge is needed')
